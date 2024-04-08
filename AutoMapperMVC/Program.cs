@@ -12,6 +12,7 @@ public class Program
 		var builder = WebApplication.CreateBuilder(args);
 
 		// Add services to the container.
+
 		builder.Services.AddControllersWithViews().AddFluentValidation(options =>
 		{
 			options.RegisterValidatorsFromAssemblyContaining<Program>();
@@ -26,6 +27,8 @@ public class Program
 		{
 			options.SuppressModelStateInvalidFilter = true;
 		});
+
+		builder.Services.AddAutoMapper(typeof(Program));
 
 		var app = builder.Build();
 

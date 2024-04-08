@@ -4,6 +4,7 @@ using AutoMapperMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoMapperMVC.Migrations
 {
     [DbContext(typeof(AutoMapperDbContext))]
-    partial class AutoMapperDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408122322_productpropertyupdate")]
+    partial class productpropertyupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,11 +63,16 @@ namespace AutoMapperMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
+                    b.Property<int?>("CategoryId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategoryId");
+
+                    b.HasIndex("CategoryId1");
 
                     b.ToTable("Categories");
                 });
@@ -144,10 +152,17 @@ namespace AutoMapperMVC.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("AutoMapperMVC.Models.ORM.Category", b =>
+                {
+                    b.HasOne("AutoMapperMVC.Models.ORM.Category", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("CategoryId1");
+                });
+
             modelBuilder.Entity("AutoMapperMVC.Models.ORM.Product", b =>
                 {
                     b.HasOne("AutoMapperMVC.Models.ORM.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -157,7 +172,7 @@ namespace AutoMapperMVC.Migrations
 
             modelBuilder.Entity("AutoMapperMVC.Models.ORM.Category", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("AutoMapperMVC.Models.ORM.Customer", b =>
