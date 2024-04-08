@@ -3,7 +3,8 @@
 public class AddressDto
 {
 	public int Id { get; set; }
-	public string Content { get; set; }
-	public string Province { get; set; }
-	public string PostalCode { get; set; }
+	public string Aciklama { get; set; }
+	public string Sehir { get; set; }
+	public string PostaKodu { get; set; }
+	public int MusteriId { get; set; }
 }
