@@ -9,4 +9,8 @@ public class Customer
 	public DateTime? BirthDate { get; set; }
 	public IList<Address> Addresses { get; set; }
 	public Gender Gender { get; set; }
+	public string GetFullName()
+	{
+		return $"{Name} - {Email} - {Age}";
+	}
 }

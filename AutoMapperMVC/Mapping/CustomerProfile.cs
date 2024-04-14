@@ -8,7 +8,7 @@ public class CustomerProfile : Profile
 {
 	public CustomerProfile()
 	{
-		CreateMap<Customer, CustomerDto>();
+		CreateMap<Customer, CustomerDto>().ForMember(dest => dest.FullName, opt => opt.MapFrom(x => x.GetFullName()));
 		CreateMap<CustomerDto, Customer>();
 	}
 }
